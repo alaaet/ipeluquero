@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     #added
     'rest_framework',
+    'knox',
     #default
     'django.contrib.admin',
     'django.contrib.auth',
@@ -47,9 +48,9 @@ INSTALLED_APPS = [
 ]
 
 REST_FRAMEWORK = {  
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.AllowAny'
-    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'knox.auth.TokenAuthentication',
+    ),
     'DATETIME_FORMAT': "%m/%d/%Y %H:%M:%S",
 }
 MIDDLEWARE = [
