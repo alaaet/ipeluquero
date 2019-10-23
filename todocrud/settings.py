@@ -32,8 +32,6 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     #added
-    'frontend.apps.FrontendConfig', 
-    'todos.apps.TodosConfig',
     'rest_framework',
     #default
     'django.contrib.admin',
@@ -43,7 +41,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     #custom
-
+    'frontend.apps.FrontendConfig', 
+    'todos.apps.TodosConfig',
+    'account.apps.AccountConfig'
 ]
 
 REST_FRAMEWORK = {  
@@ -79,6 +79,8 @@ TEMPLATES = [
         },
     },
 ]
+
+AUTH_USER_MODEL = 'account.Account'
 
 WSGI_APPLICATION = 'todocrud.wsgi.application'
 
