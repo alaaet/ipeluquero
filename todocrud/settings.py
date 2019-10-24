@@ -54,6 +54,7 @@ REST_FRAMEWORK = {
     'DATETIME_FORMAT': "%m/%d/%Y %H:%M:%S",
 }
 MIDDLEWARE = [
+    'djdev_panel.middleware.DebugMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',

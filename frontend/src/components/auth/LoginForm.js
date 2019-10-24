@@ -3,6 +3,8 @@ import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import { login } from '../../actions/auth';
+import FacebookLogin from 'react-facebook-login'
+import GoogleLogin from 'react-google-login';
 
 class LoginForm extends Component {
   renderField = ({ input, label, type, meta: { touched, error } }) => {
@@ -29,6 +31,18 @@ class LoginForm extends Component {
   onSubmit = formValues => {
     this.props.login(formValues);
   };
+
+  componentClicked = () =>{
+    console.log("facebook login was clicked");
+  }
+
+  responseFacebook = response => {
+    console.log(response);
+  }
+
+  responseGoogle = response => {
+    console.log(response);
+  }
 
   render() {
     if (this.props.isAuthenticated) {
@@ -63,6 +77,20 @@ class LoginForm extends Component {
           <p style={{ marginTop: '1rem' }}>
             Don't have an account? <Link to='/register'>Register</Link>
           </p>
+          <FacebookLogin
+            appId="2461085464128920"
+            autoLoad={true}
+            fields="name,email,picture"
+            version="4.0"
+            onClick={this.componentClicked}
+            callback={this.responseFacebook} />
+            <GoogleLogin
+                clientId="676403624626-5ci6jih0hne9alruh26jsm26nbaqinbi.apps.googleusercontent.com"
+                buttonText="Login"
+                onSuccess={this.responseGoogle}
+                onFailure={this.responseGoogle}
+                cookiePolicy={'single_host_origin'}
+            />
         </div>
       </div>
     );

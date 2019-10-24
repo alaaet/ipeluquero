@@ -2,15 +2,21 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
 class MyAccountManager(BaseUserManager):
-    def create_user(self, email, username, password=None):
+    def create_user(self, email, username, password=None,**args):
         if not email:
             raise ValueError("Users must have an email address")
         if not username:
             raise ValueError("Users must have a username")
-        
+
         user = self.model(
             email=self.normalize_email(email),
             username=username,
+            provider=args['provider'],
+            given_name=args['given_name'] ,
+            family_name=args['family_name'],
+            image_url=args['image_url'],
+            social_token=args['social_token'],
+            is_social_account=args['is_social_account'],
         )
 
         user.set_password(password)
@@ -33,13 +39,19 @@ class MyAccountManager(BaseUserManager):
 
 class Account(AbstractBaseUser):
     email = models.EmailField(verbose_name="email", max_length=60, unique=True)
-    username = models.CharField(max_length=30, unique=True)
+    username = models.CharField(max_length=50, unique=True)
+    given_name = models.CharField(max_length=50, null=True)
+    family_name = models.CharField(max_length=50, null=True)
+    image_url = models.CharField(max_length=300, null=True)
+    social_token = models.CharField(max_length=300, null=True)
+    provider = models.CharField(max_length=30, null=True)
     date_joined = models.DateTimeField(verbose_name='date joined', auto_now_add=True)
     last_login = models.DateTimeField(verbose_name='last login', auto_now=True)
     is_admin = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
+    is_social_account = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']

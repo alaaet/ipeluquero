@@ -1,7 +1,7 @@
-from rest_framework import generics, permissions
+from rest_framework import generics, permissions,serializers
 from rest_framework.response import Response
 from knox.models import AuthToken
-from .serializers import UserSerializer, RegisterSerializer, LoginSerializer
+from .serializers import UserSerializer, RegisterSerializer, LoginSerializer, SocialLoginSerializer
 
 class UserAPIView(generics.RetrieveAPIView):
     permission_classes = [
@@ -36,3 +36,26 @@ class LoginAPIView(generics.GenericAPIView):
             "user": UserSerializer(user, context=self.get_serializer_context()).data,
             "token": AuthToken.objects.create(user)[1]
         })
+
+class SocialLoginAPIView(generics.GenericAPIView):
+    serializer_class = SocialLoginSerializer
+
+    def post(self, request, *args, **kwargs):
+        print(request.data)        
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        result = serializer.validated_data 
+        if result['exists']:                       
+            print("Logging USER: ",result['user'])
+            return Response({
+            "user": UserSerializer(result['user'], context=self.get_serializer_context()).data,
+            "token": AuthToken.objects.create(result['user'])[1]
+            })
+
+        else :         
+            user = serializer.save()
+            print("Creating USER: ",user)
+            return Response({
+                "user": UserSerializer(user, context=self.get_serializer_context()).data,
+                "token": AuthToken.objects.create(user)[1]
+            })
