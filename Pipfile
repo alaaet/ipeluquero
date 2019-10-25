@@ -12,6 +12,7 @@ django = "*"
 djangorestframework = "*"
 django-rest-knox = "*"
 django-developer-panel = "*"
+requests = "*"
 
 [requires]
 python_version = "3.8"
