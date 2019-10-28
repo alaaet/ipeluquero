@@ -1,51 +1,53 @@
-import React, { Component } from 'react'
-import { Field, reduxForm } from 'redux-form';
+import React, { Component } from "react";
+import { Field, reduxForm } from "redux-form";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import Alert from "react-bootstrap/Alert";
 
-class Form extends Component {
-    renderField = ({ input, label, meta: { touched, error } }) => {
-      return (
-        <div className={`field ${touched && error ? 'error' : ''}`}>
-          <label>{label}</label>
-          <input {...input} autoComplete='off' />
-          {touched && error && (
-            <span className='ui pointing red basic label'>{error}</span>
-          )}
-        </div>
-      );
-    };
-  
-    onSubmit = formValues => {
-      this.props.onSubmit(formValues);
-    };
-  
-    render() {
-        const btnText = `${this.props.initialValues ? 'Update' : 'Add'}`;
-      return (
-        <div className='ui segment'>
-          <form
-            onSubmit={this.props.handleSubmit(this.onSubmit)}
-            className='ui form error'
-          >
-            <Field name='task' component={this.renderField} label='Task' />
-            <button className='ui primary button'>{btnText}</button>
-          </form>
-        </div>
-      );
-    }
-  }
-  
-  const validate = formValues => {
-    const errors = {};
-  
-    if (!formValues.task) {
-      errors.task = 'Please enter at least 1 character';
-    }
-  
-    return errors;
+class TodoForm extends Component {
+  renderField = ({ input, meta: { touched, error }, ...props }) => {
+    return (
+      <Form.Group>
+        <Form.Label>{props.label}</Form.Label>
+        <Form.Control {...props} {...input} />
+        {touched && error && (
+          <Alert key="1" variant="danger">
+            {error}
+          </Alert>
+        )}
+      </Form.Group>
+    );
   };
-  
-  export default reduxForm({
-    form: 'todoForm',
-    touchOnBlur: false,
-    validate
-  })(Form);
+
+  onSubmit = formValues => {
+    console.log("FORM VALUES: " + JSON.stringify(formValues));
+    this.props.onSubmit(formValues);
+  };
+
+  render() {
+    const btnText = `${this.props.initialValues ? "Update" : "Add"}`;
+    return (
+      <Form onSubmit={this.props.handleSubmit(this.onSubmit)}>
+        <Field name="task" component={this.renderField} label="Task" />
+        <Button variant="primary" type="submit">
+          {btnText}
+        </Button>
+      </Form>
+    );
+  }
+}
+
+const validate = formValues => {
+  const errors = {};
+  if (!formValues.task) {
+    errors.task = "Please enter at least 1 character";
+  }
+
+  return errors;
+};
+
+export default reduxForm({
+  form: "todoForm",
+  touchOnBlur: false,
+  validate
+})(TodoForm);

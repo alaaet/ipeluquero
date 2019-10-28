@@ -1,9 +1,9 @@
-import React, { Component, Fragment } from 'react';
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import Modal from '../layout/Modal';
-import history from '../../history';
-import { getTodo, deleteTodo } from '../../actions/todos';
+import React, { Component, Fragment } from "react";
+import { connect } from "react-redux";
+import history from "../../history";
+import { getTodo, deleteTodo } from "../../actions/todos";
+import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
 
 class TodoDelete extends Component {
   componentDidMount() {
@@ -12,7 +12,7 @@ class TodoDelete extends Component {
 
   renderContent() {
     if (!this.props.todo) {
-      return 'Are you sure you want to delete this task?';
+      return "Are you sure you want to delete this task?";
     }
     return `Are you sure you want to delete the task: ${this.props.todo.task}`;
   }
@@ -20,28 +20,26 @@ class TodoDelete extends Component {
   renderActions() {
     const { id } = this.props.match.params;
     return (
-      <Fragment>
-        <button
-          onClick={() => this.props.deleteTodo(id)}
-          className='ui negative button'
-        >
+      <Modal.Footer>
+        <Button variant="danger" onClick={() => this.props.deleteTodo(id)}>
           Delete
-        </button>
-        <Link to='/' className='ui button'>
+        </Button>
+        <Button variant="secondary" href="/">
           Cancel
-        </Link>
-      </Fragment>
+        </Button>
+      </Modal.Footer>
     );
   }
 
   render() {
     return (
-      <Modal
-        title='Delete Todo'
-        content={this.renderContent()}
-        actions={this.renderActions()}
-        onDismiss={() => history.push('/')}
-      />
+      <Modal show onHide={() => history.push("/")}>
+        <Modal.Header closeButton>
+          <Modal.Title>Delete Todo</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>{this.renderContent()}</Modal.Body>
+        {this.renderActions()}
+      </Modal>
     );
   }
 }
