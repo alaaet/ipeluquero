@@ -38,7 +38,7 @@ class Header extends Component {
     const handleSelect = () => {};
 
     return (
-      <Navbar expand="lg" className="navbar-dark bg-dark">
+      <Navbar expand="lg" className="navbar-dark bg-primary">
         <Navbar.Brand href="/">TodoCRUD</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">

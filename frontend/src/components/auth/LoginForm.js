@@ -5,17 +5,23 @@ import { Field, reduxForm } from "redux-form";
 import { login, social_login } from "../../actions/auth";
 import FacebookLogin from "react-facebook-login";
 import GoogleLogin from "react-google-login";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import Alert from "react-bootstrap/Alert";
+import Container from "react-bootstrap/Container";
 
 class LoginForm extends Component {
-  renderField = ({ input, label, type, meta: { touched, error } }) => {
+  renderField = ({ input, meta: { touched, error },  ...props}) => {
     return (
-      <div className={`field ${touched && error ? "error" : ""}`}>
-        <label>{label}</label>
-        <input {...input} type={type} />
-        {touched && error && (
-          <span className="ui pointing red basic label">{error}</span>
-        )}
-      </div>
+      <Form.Group>
+      <Form.Label>{props.label}</Form.Label>
+      <Form.Control {...props} {...input} />
+      {touched && error && (
+        <Alert key="1" variant="danger">
+          {error}
+        </Alert>
+      )}
+    </Form.Group>
     );
   };
 
@@ -72,51 +78,44 @@ class LoginForm extends Component {
       return <Redirect to="/" />;
     }
     return (
-      <div className="ui container">
-        <div className="ui segment">
-          <form
-            onSubmit={this.props.handleSubmit(this.onSubmit)}
-            className="ui form"
-          >
-            <Field
-              name="username"
-              type="text"
-              component={this.renderField}
-              label="Email"
-            />
-            <Field
-              name="password"
-              type="password"
-              component={this.renderField}
-              label="Password"
-            />
-            <Field
-              name="non_field_errors"
-              type="hidden"
-              component={this.hiddenField}
-            />
-            <button className="ui primary button">Login</button>
-          </form>
+      <Container style={{ marginTop: "2rem", border:"1px",
+      marginBottom: "15px",
+      background: "#f7f7f7",
+      boxShadow: "0px 2px 2px rgba(0, 0, 0, 0.3)",
+      padding: "30px",
+      width:'340px' }}>
+        <Form onSubmit={this.props.handleSubmit(this.onSubmit)}>
+          <Field name="username" type="text" component={this.renderField} label="Email" />
+          <Field name="password" type="password" component={this.renderField} label="Password" />
+          <Field name="non_field_errors" type="hidden" component={this.hiddenField} label="Password" />
+          <Button variant="primary" type="submit">
+          Login
+          </Button>
+        </Form>
           <p style={{ marginTop: "1rem" }}>
             Don't have an account? <Link to="/register">Register</Link>
           </p>
           <FacebookLogin
             appId="2461085464128920"
+            textButton="Login with Facebook"
             autoLoad={false}
             fields="name,email,picture"
             version="4.0"
             onClick={this.componentClicked}
             callback={this.responseFacebook}
+            cssClass="btn btn-block btn-social btn-facebook"
+            icon="fa fa-facebook"
           />
           <GoogleLogin
             clientId="676403624626-5ci6jih0hne9alruh26jsm26nbaqinbi.apps.googleusercontent.com"
-            buttonText="Login"
             onSuccess={this.responseGoogle}
             onFailure={this.responseGoogle}
             cookiePolicy={"single_host_origin"}
+            render={renderProps => (
+              <Button onClick={renderProps.onClick} disabled={renderProps.disabled} className="btn btn-block btn-social btn-google"> <span class="fa fa-google"></span> Login with Google</Button>
+            )}
           />
-        </div>
-      </div>
+      </Container>
     );
   }
 }

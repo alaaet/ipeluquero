@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { addTodo } from "../../actions/todos";
 import TodoForm from "./TodoForm";
-import Jumbotron from "react-bootstrap/Jumbotron";
+import Container from "react-bootstrap/Container";
 
 export class TodoCreate extends Component {
   onSubmit = formValues => {
@@ -11,9 +11,13 @@ export class TodoCreate extends Component {
 
   render() {
     return (
-      <Jumbotron style={{ marginTop: "2rem" }}>
+      <Container style={{
+      marginBottom: "15px",
+      background: "#f7f7f7",
+      boxShadow: "0px 2px 2px rgba(0, 0, 0, 0.3)",
+      padding: "30px" }}>
         <TodoForm destroyOnUnmount={false} onSubmit={this.onSubmit} />
-      </Jumbotron>
+      </Container>
     );
   }
 }

@@ -3,7 +3,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getTodo, editTodo } from "../../actions/todos";
 import TodoForm from "./TodoForm";
-import Jumbotron from "react-bootstrap/Jumbotron";
 import Container from "react-bootstrap/Container";
 
 class TodoEdit extends Component {
@@ -17,15 +16,17 @@ class TodoEdit extends Component {
 
   render() {
     return (
-      <Container>
-        <Jumbotron style={{ marginTop: "2rem" }}>
-          <h2 style={{ marginTop: "2rem" }}>Edit Todo</h2>
-          <TodoForm
-            initialValues={_.pick(this.props.todo, "task")}
-            enableReinitialize={true}
-            onSubmit={this.onSubmit}
-          />
-        </Jumbotron>
+      <Container style={{
+      marginBottom: "15px",
+      background: "#f7f7f7",
+      boxShadow: "0px 2px 2px rgba(0, 0, 0, 0.3)",
+      padding: "30px" }}>        
+        <h2 style={{ marginTop: "2rem" }}>Edit Todo</h2>
+        <TodoForm
+          initialValues={_.pick(this.props.todo, "task")}
+          enableReinitialize={true}
+          onSubmit={this.onSubmit}
+        />
       </Container>
     );
   }

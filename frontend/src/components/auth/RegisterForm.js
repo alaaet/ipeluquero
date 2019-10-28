@@ -3,17 +3,23 @@ import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import { register } from '../../actions/auth';
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import Alert from "react-bootstrap/Alert";
+import Container from "react-bootstrap/Container";
 
 class RegisterForm extends Component {
-  renderField = ({ input, label, type, meta: { touched, error } }) => {
+  renderField = ({ input, meta: { touched, error },  ...props}) => {
     return (
-      <div className={`field ${touched && error ? 'error' : ''}`}>
-        <label>{label}</label>
-        <input {...input} type={type} />
-        {touched && error && (
-          <span className='ui pointing red basic label'>{error}</span>
-        )}
-      </div>
+      <Form.Group>
+      <Form.Label>{props.label}</Form.Label>
+      <Form.Control {...props} {...input} />
+      {touched && error && (
+        <Alert key="1" variant="danger">
+          {error}
+        </Alert>
+      )}
+    </Form.Group>
     );
   };
 
@@ -26,11 +32,14 @@ class RegisterForm extends Component {
       return <Redirect to='/' />;
     }
     return (
-      <div className='ui container'>
-        <div className='ui segment'>
-          <form
+      <Container style={{ marginTop: "2rem", border:"1px",
+      marginBottom: "15px",
+      background: "#f7f7f7",
+      boxShadow: "0px 2px 2px rgba(0, 0, 0, 0.3)",
+      padding: "30px",
+      width:'340px' }}>
+          <Form
             onSubmit={this.props.handleSubmit(this.onSubmit)}
-            className='ui form'
           >
             <Field
               name='username'
@@ -60,13 +69,14 @@ class RegisterForm extends Component {
               label='Confirm Password'
               validate={[required, passwordsMatch]}
             />
-            <button className='ui primary button'>Register</button>
-          </form>
+            <Button variant="primary" type="submit">
+              Register
+            </Button>
+          </Form>
           <p style={{ marginTop: '1rem' }}>
             Already have an account? <Link to='/login'>Login</Link>
           </p>
-        </div>
-      </div>
+      </Container>
     );
   }
 }

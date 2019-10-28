@@ -24,7 +24,7 @@ class TodoDelete extends Component {
         <Button variant="danger" onClick={() => this.props.deleteTodo(id)}>
           Delete
         </Button>
-        <Button variant="secondary" href="/">
+        <Button variant="secondary" onClick={() => history.push("/")}>
           Cancel
         </Button>
       </Modal.Footer>
