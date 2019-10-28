@@ -1,43 +1,49 @@
-import React, { Component } from 'react';
-import {connect} from 'react-redux';
-import { getTodos , deleteTodo} from '../../actions/todos';
-import { Link } from 'react-router-dom'; 
-
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { getTodos, deleteTodo } from "../../actions/todos";
+import ListGroup from "react-bootstrap/ListGroup";
+import Button from "react-bootstrap/Button";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 class TodoList extends Component {
-    componentWillMount() {
-        this.props.getTodos();
-    }
-    
-    render() {
-        return (
-<div className='ui relaxed divided list' style={{ marginTop: '2rem' }}>
-        {this.props.todos.map(todo => (
-          <div className='item' key={todo.id}>
-              <div className='right floated content'>
-              <Link
-                to={`/delete/${todo.id}`}
-                className='small ui negative basic button'
-              >
-                Delete
-              </Link>
-            </div>
-            <i className='large calendar outline middle aligned icon' />
-            <div className='content'>
-            <Link to={`/edit/${todo.id}`} className='header'>
-                {todo.task}
-            </Link>
-              <div className='description'>{todo.created_at}</div>
-            </div>
-          </div>
-        ))}
-      </div>
-        )
-    }
+  componentWillMount() {
+    this.props.getTodos();
+  }
+
+  render() {
+    return (
+      <ListGroup>
+        <Container>
+          {this.props.todos.map(todo => (
+            <ListGroup.Item key={todo.id}>
+              <Row className="text-center">
+                <Col>
+                  <Button href={`/edit/${todo.id}`} variant="link">
+                    {todo.task}
+                  </Button>
+                </Col>
+                <Col>{todo.created_at}</Col>
+                <Col sm className="text-right">
+                  <Button href={`/delete/${todo.id}`} variant="danger">
+                    Delete
+                  </Button>
+                </Col>
+              </Row>
+            </ListGroup.Item>
+          ))}
+        </Container>
+      </ListGroup>
+    );
+  }
 }
 
-const mapStateToProps = state =>({
-    todos: Object.values(state.todos)
+const mapStateToProps = state => ({
+  todos: Object.values(state.todos)
 });
 
-export default connect(mapStateToProps,{getTodos, deleteTodo})(TodoList);
+export default connect(
+  mapStateToProps,
+  { getTodos, deleteTodo }
+)(TodoList);
