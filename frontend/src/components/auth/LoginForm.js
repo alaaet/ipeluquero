@@ -112,7 +112,7 @@ class LoginForm extends Component {
             onFailure={this.responseGoogle}
             cookiePolicy={"single_host_origin"}
             render={renderProps => (
-              <Button onClick={renderProps.onClick} disabled={renderProps.disabled} className="btn btn-block btn-social btn-google"> <span class="fa fa-google"></span> Login with Google</Button>
+              <Button onClick={renderProps.onClick} disabled={renderProps.disabled} className="btn btn-block btn-social btn-google"> <span className="fa fa-google"></span> Login with Google</Button>
             )}
           />
       </Container>

@@ -13,7 +13,7 @@ class RegisterForm extends Component {
     return (
       <Form.Group>
       <Form.Label>{props.label}</Form.Label>
-      <Form.Control {...props} {...input} />
+      <Form.Control {...props} {...input} className= {touched?error?"is-invalid":"is-valid":""} />
       {touched && error && (
         <Alert key="1" variant="danger">
           {error}
@@ -46,14 +46,14 @@ class RegisterForm extends Component {
               type='text'
               component={this.renderField}
               label='Username'
-              validate={[required, minLength3, maxLength15]}
+              validate={[required, minLength3]}
             />
             <Field
               name='email'
               type='email'
               component={this.renderField}
               label='Email'
-              validate={required}
+              validate={[required, minLength3]}
             />
             <Field
               name='password'
