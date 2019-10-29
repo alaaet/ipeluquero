@@ -4,6 +4,8 @@ import history from "../../history";
 import { getTodo, deleteTodo } from "../../actions/todos";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
+// Internationalization
+import { withTranslation } from "react-i18next";
 
 class TodoDelete extends Component {
   componentDidMount() {
@@ -12,9 +14,9 @@ class TodoDelete extends Component {
 
   renderContent() {
     if (!this.props.todo) {
-      return "Are you sure you want to delete this task?";
+      return this.props.t('todo.del-frm-confirm');
     }
-    return `Are you sure you want to delete the task: ${this.props.todo.task}`;
+    return this.props.t('todo.del-frm-confirm-with-task')+ this.props.todo.task;
   }
 
   renderActions() {
@@ -22,20 +24,21 @@ class TodoDelete extends Component {
     return (
       <Modal.Footer>
         <Button variant="danger" onClick={() => this.props.deleteTodo(id)}>
-          Delete
+        {this.props.t('todo.delete')}
         </Button>
         <Button variant="secondary" onClick={() => history.push("/")}>
-          Cancel
+        {this.props.t('todo.cancel')}
         </Button>
       </Modal.Footer>
     );
   }
 
   render() {
+    const { t }  = this.props;
     return (
       <Modal show onHide={() => history.push("/")}>
         <Modal.Header closeButton>
-          <Modal.Title>Delete Todo</Modal.Title>
+          <Modal.Title>{t('todo.del-frm-title')}</Modal.Title>
         </Modal.Header>
         <Modal.Body>{this.renderContent()}</Modal.Body>
         {this.renderActions()}
@@ -48,7 +51,7 @@ const mapStateToProps = (state, ownProps) => ({
   todo: state.todos[ownProps.match.params.id]
 });
 
-export default connect(
+export default withTranslation()(connect(
   mapStateToProps,
   { getTodo, deleteTodo }
-)(TodoDelete);
+)(TodoDelete));

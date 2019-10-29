@@ -9,7 +9,8 @@ import {
   REGISTER_FAIL,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
-  LOGOUT_SUCCESS
+  LOGOUT_SUCCESS,
+  LANGUAGE_CHANGED
 } from "./types";
 
 // REGISTER USER
@@ -131,6 +132,16 @@ export const logout = () => async (dispatch, getState) => {
     type: LOGOUT_SUCCESS
   });
 };
+
+// CHANGE USER LANGUAGE
+export const change_language = (lang) => (dispatch) => {
+
+  dispatch({
+    type: LANGUAGE_CHANGED,
+    payload: lang
+  });
+};
+
 
 // helper function
 export const tokenConfig = getState => {

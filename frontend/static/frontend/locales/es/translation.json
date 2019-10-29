@@ -1,5 +1,4 @@
 {
-  "welcome": {
-    "1": "Welcome"
-  }
+  "welcome": "Bienvenido",
+  "language":"idioma"
 }
