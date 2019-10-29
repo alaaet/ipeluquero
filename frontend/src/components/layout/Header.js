@@ -1,26 +1,36 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { logout } from "../../actions/auth";
+import { logout, change_language } from "../../actions/auth";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
+import NavDropdown from "react-bootstrap/NavDropdown";
 // Internationalization
-import "../../i18n";
-import { useTranslation } from "react-i18next";
+import { withTranslation } from "react-i18next";
 
 class Header extends Component {
+  changeLocale = lang => {
+    this.props.i18n.changeLanguage(lang);
+    this.props.change_language(lang)
+  };
+
   render() {
     const { user, isAuthenticated } = this.props.auth;
-    const { t, i18n } = useTranslation();
+    const { t }  = this.props;
     const userLinks = (
       <Nav className="ml-auto">
+        <NavDropdown title={t('dashboard.language')} id="basic-nav-dropdown">
+        <NavDropdown.Item href="#" onClick={()=>this.changeLocale('en')}>En</NavDropdown.Item>
+        <NavDropdown.Item href="#" onClick={()=>this.changeLocale('es')}>Es</NavDropdown.Item>
+        <NavDropdown.Item href="#" onClick={()=>this.changeLocale('ar')}>Ar</NavDropdown.Item>
+      </NavDropdown>
         <Nav.Item>
           <Nav.Link eventKey="disabled" disabled>
-            {t("welcome.1")} {user ? user.username : ""} ...
+            {t('dashboard.welcome')} {user ? user.username : ""} ...
           </Nav.Link>
         </Nav.Item>
         <Nav.Item>
           <Nav.Link href="#" onClick={this.props.logout}>
-            Logout
+          {t('dashboard.logout')}
           </Nav.Link>
         </Nav.Item>
       </Nav>
@@ -42,12 +52,12 @@ class Header extends Component {
 
     return (
       <Navbar expand="lg" className="navbar-dark bg-primary">
-        <Navbar.Brand href="/">TodoCRUD</Navbar.Brand>
+        <Navbar.Brand href="/">{t('app-title')}</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
             <Nav.Item>
-              <Nav.Link href="/">Home</Nav.Link>
+              <Nav.Link href="/">{t('dashboard.home')}</Nav.Link>
             </Nav.Item>
           </Nav>
           {isAuthenticated ? userLinks : guestLinks}
@@ -58,10 +68,11 @@ class Header extends Component {
 }
 
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
+  lang: state.auth.lang
 });
 
-export default connect(
+export default withTranslation()(connect(
   mapStateToProps,
-  { logout }
-)(Header);
+  { logout,change_language }
+)(Header));

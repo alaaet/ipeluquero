@@ -6,14 +6,16 @@ import {
     REGISTER_FAIL,
     LOGIN_SUCCESS,
     LOGIN_FAIL,
-    LOGOUT_SUCCESS
+    LOGOUT_SUCCESS,
+    LANGUAGE_CHANGED
   } from '../actions/types';
   
   const initialState = {
     isLoading: false,
     isAuthenticated: null,
     user: null,
-    token: localStorage.getItem('token')
+    token: localStorage.getItem('token'),
+    lang: localStorage.getItem('lang')
   };
   
   export default function(state = initialState, action) {
@@ -51,6 +53,9 @@ import {
           user: null,
           token: null
         };
+        case LANGUAGE_CHANGED:
+            localStorage.setItem('lang', action.payload);
+            return {...state, lang: action.payload};
       default:
         return state;
     }

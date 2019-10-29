@@ -3,6 +3,8 @@ import { Field, reduxForm } from "redux-form";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Alert";
+// Internationalization
+import { withTranslation } from "react-i18next";
 
 class TodoForm extends Component {
   renderField = ({ input, meta: { touched, error }, ...props }) => {
@@ -25,10 +27,11 @@ class TodoForm extends Component {
   };
 
   render() {
-    const btnText = `${this.props.initialValues ? "Update" : "Add"}`;
+    const { t }  = this.props;
+    const btnText = `${this.props.initialValues ? t('todo.edit') : t('todo.add')}`;
     return (
       <Form onSubmit={this.props.handleSubmit(this.onSubmit)}>
-        <Field name="task" component={this.renderField} label="Task" />
+        <Field name="task" component={this.renderField} label={t('todo.task')} />
         <Button variant="primary" type="submit">
           {btnText}
         </Button>
@@ -46,8 +49,8 @@ const validate = formValues => {
   return errors;
 };
 
-export default reduxForm({
+export default withTranslation()(reduxForm({
   form: "todoForm",
   touchOnBlur: false,
   validate
-})(TodoForm);
+})(TodoForm));
