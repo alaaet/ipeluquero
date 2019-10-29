@@ -6,6 +6,8 @@ import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+// Internationalization
+import { withTranslation } from "react-i18next";
 
 class TodoList extends Component {
   componentWillMount() {
@@ -13,6 +15,7 @@ class TodoList extends Component {
   }
 
   render() {
+    const { t } = this.props;
     return (
       <ListGroup>
         <Container>
@@ -27,7 +30,7 @@ class TodoList extends Component {
                 <Col>{todo.created_at}</Col>
                 <Col sm className="text-right">
                   <Button href={`/delete/${todo.id}`} variant="danger">
-                    Delete
+                    {t("todo.delete")}
                   </Button>
                 </Col>
               </Row>
@@ -43,7 +46,9 @@ const mapStateToProps = state => ({
   todos: Object.values(state.todos)
 });
 
-export default connect(
-  mapStateToProps,
-  { getTodos, deleteTodo }
-)(TodoList);
+export default withTranslation()(
+  connect(
+    mapStateToProps,
+    { getTodos, deleteTodo }
+  )(TodoList)
+);

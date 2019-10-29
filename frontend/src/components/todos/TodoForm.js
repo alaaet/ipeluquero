@@ -27,11 +27,17 @@ class TodoForm extends Component {
   };
 
   render() {
-    const { t }  = this.props;
-    const btnText = `${this.props.initialValues ? t('todo.edit') : t('todo.add')}`;
+    const { t } = this.props;
+    const btnText = `${
+      this.props.initialValues ? t("todo.edit") : t("todo.add")
+    }`;
     return (
       <Form onSubmit={this.props.handleSubmit(this.onSubmit)}>
-        <Field name="task" component={this.renderField} label={t('todo.task')} />
+        <Field
+          name="task"
+          component={this.renderField}
+          label={t("todo.task")}
+        />
         <Button variant="primary" type="submit">
           {btnText}
         </Button>
@@ -40,17 +46,20 @@ class TodoForm extends Component {
   }
 }
 
-const validate = formValues => {
+const validate = (formValues, props) => {
+  const { t } = props;
   const errors = {};
   if (!formValues.task) {
-    errors.task = "Please enter at least 1 character";
+    errors.task = t("error.1char@least");
   }
 
   return errors;
 };
 
-export default withTranslation()(reduxForm({
-  form: "todoForm",
-  touchOnBlur: false,
-  validate
-})(TodoForm));
+export default withTranslation()(
+  reduxForm({
+    form: "todoForm",
+    touchOnBlur: false,
+    validate
+  })(TodoForm)
+);

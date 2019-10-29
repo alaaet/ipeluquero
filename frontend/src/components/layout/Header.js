@@ -10,27 +10,33 @@ import { withTranslation } from "react-i18next";
 class Header extends Component {
   changeLocale = lang => {
     this.props.i18n.changeLanguage(lang);
-    this.props.change_language(lang)
+    this.props.change_language(lang);
   };
 
   render() {
     const { user, isAuthenticated } = this.props.auth;
-    const { t }  = this.props;
+    const { t } = this.props;
     const userLinks = (
       <Nav className="ml-auto">
-        <NavDropdown title={t('dashboard.language')} id="basic-nav-dropdown">
-        <NavDropdown.Item href="#" onClick={()=>this.changeLocale('en')}>En</NavDropdown.Item>
-        <NavDropdown.Item href="#" onClick={()=>this.changeLocale('es')}>Es</NavDropdown.Item>
-        <NavDropdown.Item href="#" onClick={()=>this.changeLocale('ar')}>Ar</NavDropdown.Item>
-      </NavDropdown>
+        <NavDropdown title={t("dashboard.language")} id="basic-nav-dropdown">
+          <NavDropdown.Item href="#" onClick={() => this.changeLocale("en")}>
+            En
+          </NavDropdown.Item>
+          <NavDropdown.Item href="#" onClick={() => this.changeLocale("es")}>
+            Es
+          </NavDropdown.Item>
+          <NavDropdown.Item href="#" onClick={() => this.changeLocale("ar")}>
+            Ar
+          </NavDropdown.Item>
+        </NavDropdown>
         <Nav.Item>
           <Nav.Link eventKey="disabled" disabled>
-            {t('dashboard.welcome')} {user ? user.username : ""} ...
+            {t("dashboard.welcome")} {user ? user.username : ""} ...
           </Nav.Link>
         </Nav.Item>
         <Nav.Item>
           <Nav.Link href="#" onClick={this.props.logout}>
-          {t('dashboard.logout')}
+            {t("dashboard.logout")}
           </Nav.Link>
         </Nav.Item>
       </Nav>
@@ -38,11 +44,22 @@ class Header extends Component {
 
     const guestLinks = (
       <Nav className="ml-auto">
+        <NavDropdown title={t("dashboard.language")} id="basic-nav-dropdown">
+          <NavDropdown.Item href="#" onClick={() => this.changeLocale("en")}>
+            En
+          </NavDropdown.Item>
+          <NavDropdown.Item href="#" onClick={() => this.changeLocale("es")}>
+            Es
+          </NavDropdown.Item>
+          <NavDropdown.Item href="#" onClick={() => this.changeLocale("ar")}>
+            Ar
+          </NavDropdown.Item>
+        </NavDropdown>
         <Nav.Item>
-          <Nav.Link href="/register">Sign Up</Nav.Link>
+          <Nav.Link href="/register">{t("dashboard.sign-up")}</Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link href="/login">Login</Nav.Link>
+          <Nav.Link href="/login">{t("dashboard.login")}</Nav.Link>
         </Nav.Item>
       </Nav>
     );
@@ -52,12 +69,12 @@ class Header extends Component {
 
     return (
       <Navbar expand="lg" className="navbar-dark bg-primary">
-        <Navbar.Brand href="/">{t('app-title')}</Navbar.Brand>
+        <Navbar.Brand href="/">{t("app-title")}</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
             <Nav.Item>
-              <Nav.Link href="/">{t('dashboard.home')}</Nav.Link>
+              <Nav.Link href="/">{t("dashboard.home")}</Nav.Link>
             </Nav.Item>
           </Nav>
           {isAuthenticated ? userLinks : guestLinks}
@@ -72,7 +89,9 @@ const mapStateToProps = state => ({
   lang: state.auth.lang
 });
 
-export default withTranslation()(connect(
-  mapStateToProps,
-  { logout,change_language }
-)(Header));
+export default withTranslation()(
+  connect(
+    mapStateToProps,
+    { logout, change_language }
+  )(Header)
+);

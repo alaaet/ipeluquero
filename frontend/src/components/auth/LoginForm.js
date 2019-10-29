@@ -9,19 +9,21 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Alert";
 import Container from "react-bootstrap/Container";
+// Internationalization
+import { withTranslation } from "react-i18next";
 
 class LoginForm extends Component {
-  renderField = ({ input, meta: { touched, error },  ...props}) => {
+  renderField = ({ input, meta: { touched, error }, ...props }) => {
     return (
       <Form.Group>
-      <Form.Label>{props.label}</Form.Label>
-      <Form.Control {...props} {...input} />
-      {touched && error && (
-        <Alert key="1" variant="danger">
-          {error}
-        </Alert>
-      )}
-    </Form.Group>
+        <Form.Label>{props.label}</Form.Label>
+        <Form.Control {...props} {...input} />
+        {touched && error && (
+          <Alert key="1" variant="danger">
+            {error}
+          </Alert>
+        )}
+      </Form.Group>
     );
   };
 
@@ -29,7 +31,11 @@ class LoginForm extends Component {
     return (
       <div className="field">
         <input type={type} />
-        {error && <div className="ui red message">{error}</div>}
+        {error && (
+          <Alert key="1" variant="danger">
+            {error}
+          </Alert>
+        )}
       </div>
     );
   };
@@ -39,7 +45,7 @@ class LoginForm extends Component {
   };
 
   componentClicked = () => {
-    console.log("facebook login was clicked");
+    //console.log("facebook login was clicked");
   };
 
   responseFacebook = response => {
@@ -74,47 +80,77 @@ class LoginForm extends Component {
   };
 
   render() {
+    const { t } = this.props;
     if (this.props.isAuthenticated) {
       return <Redirect to="/" />;
     }
     return (
-      <Container style={{ marginTop: "2rem", border:"1px",
-      marginBottom: "15px",
-      background: "#f7f7f7",
-      boxShadow: "0px 2px 2px rgba(0, 0, 0, 0.3)",
-      padding: "30px",
-      width:'340px' }}>
+      <Container
+        style={{
+          marginTop: "2rem",
+          border: "1px",
+          marginBottom: "15px",
+          background: "#f7f7f7",
+          boxShadow: "0px 2px 2px rgba(0, 0, 0, 0.3)",
+          padding: "30px",
+          width: "340px"
+        }}
+      >
         <Form onSubmit={this.props.handleSubmit(this.onSubmit)}>
-          <Field name="username" type="text" component={this.renderField} label="Email" />
-          <Field name="password" type="password" component={this.renderField} label="Password" />
-          <Field name="non_field_errors" type="hidden" component={this.hiddenField} label="Password" />
+          <Field
+            name="username"
+            type="text"
+            component={this.renderField}
+            label={t("login-frm.email")}
+          />
+          <Field
+            name="password"
+            type="password"
+            component={this.renderField}
+            label={t("login-frm.password")}
+          />
+          <Field
+            name="non_field_errors"
+            type="hidden"
+            component={this.hiddenField}
+            label={t("login-frm.password")}
+          />
           <Button variant="primary" type="submit">
-          Login
+            {t("login-frm.login")}
           </Button>
         </Form>
-          <p style={{ marginTop: "1rem" }}>
-            Don't have an account? <Link to="/register">Register</Link>
-          </p>
-          <FacebookLogin
-            appId="2461085464128920"
-            textButton="Login with Facebook"
-            autoLoad={false}
-            fields="name,email,picture"
-            version="4.0"
-            onClick={this.componentClicked}
-            callback={this.responseFacebook}
-            cssClass="btn btn-block btn-social btn-facebook"
-            icon="fa fa-facebook"
-          />
-          <GoogleLogin
-            clientId="676403624626-5ci6jih0hne9alruh26jsm26nbaqinbi.apps.googleusercontent.com"
-            onSuccess={this.responseGoogle}
-            onFailure={this.responseGoogle}
-            cookiePolicy={"single_host_origin"}
-            render={renderProps => (
-              <Button onClick={renderProps.onClick} disabled={renderProps.disabled} className="btn btn-block btn-social btn-google"> <span className="fa fa-google"></span> Login with Google</Button>
-            )}
-          />
+        <p style={{ marginTop: "1rem" }}>
+          {t("login-frm.no-account-msg")}{" "}
+          <Link to="/register">{t("login-frm.register")}</Link>
+        </p>
+        <FacebookLogin
+          appId="2461085464128920"
+          textButton={t("login-frm.fb-login")}
+          autoLoad={false}
+          fields="name,email,picture"
+          version="4.0"
+          onClick={this.componentClicked}
+          callback={this.responseFacebook}
+          cssClass="btn btn-block btn-social btn-facebook"
+          icon="fa fa-facebook"
+        />
+        <GoogleLogin
+          clientId="676403624626-5ci6jih0hne9alruh26jsm26nbaqinbi.apps.googleusercontent.com"
+          onSuccess={this.responseGoogle}
+          onFailure={this.responseGoogle}
+          cookiePolicy={"single_host_origin"}
+          render={renderProps => (
+            <Button
+              onClick={renderProps.onClick}
+              disabled={renderProps.disabled}
+              className="btn btn-block btn-social btn-google"
+            >
+              {" "}
+              <span className="fa fa-google"></span>
+              {t("login-frm.ggl-login")}
+            </Button>
+          )}
+        />
       </Container>
     );
   }
@@ -122,10 +158,12 @@ class LoginForm extends Component {
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated
 });
-LoginForm = connect(
-  mapStateToProps,
-  { login, social_login }
-)(LoginForm);
+LoginForm = withTranslation()(
+  connect(
+    mapStateToProps,
+    { login, social_login }
+  )(LoginForm)
+);
 export default reduxForm({
   form: "loginForm"
 })(LoginForm);
