@@ -3,16 +3,19 @@ import { connect } from "react-redux";
 import { logout } from "../../actions/auth";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
+// Internationalization
+import "../../i18n";
+import { useTranslation } from "react-i18next";
 
 class Header extends Component {
   render() {
     const { user, isAuthenticated } = this.props.auth;
-
+    const { t, i18n } = useTranslation();
     const userLinks = (
       <Nav className="ml-auto">
         <Nav.Item>
           <Nav.Link eventKey="disabled" disabled>
-            Welcome {user ? user.username : ""} ...
+            {t("welcome.1")} {user ? user.username : ""} ...
           </Nav.Link>
         </Nav.Item>
         <Nav.Item>
