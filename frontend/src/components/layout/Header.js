@@ -8,12 +8,12 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import { withTranslation } from "react-i18next";
 
 class Header extends Component {
-  changeLocale = lang => {
+  changeLocale = (e,lang) => {
     const prevLang = this.props.lang
     this.props.i18n.changeLanguage(lang);
     this.props.change_language(lang);
     if (lang =='ar' || prevLang == 'ar')
-    window.location.reload(false);
+    window.location.reload(false);    
   };
 
   render() {
@@ -22,13 +22,15 @@ class Header extends Component {
     const userLinks = (
       <Nav className="ml-auto">
         <NavDropdown title={t("dashboard.language")} id="basic-nav-dropdown">
-          <NavDropdown.Item href="#" onClick={() => this.changeLocale("en")}>
+          <NavDropdown.Item  onClick={(e) => this.changeLocale(e,"en")}>
             En
           </NavDropdown.Item>
-          <NavDropdown.Item href="#" onClick={() => this.changeLocale("es")}>
+          <NavDropdown.Divider />
+          <NavDropdown.Item  onClick={(e) => this.changeLocale(e,"es")}>
             Es
           </NavDropdown.Item>
-          <NavDropdown.Item href="#" onClick={() => this.changeLocale("ar")}>
+          <NavDropdown.Divider />
+          <NavDropdown.Item  onClick={(e) => this.changeLocale(e,"ar")}>
             Ar
           </NavDropdown.Item>
         </NavDropdown>
@@ -71,7 +73,7 @@ class Header extends Component {
     const handleSelect = () => {};
 
     return (
-      <Navbar expand="lg" className="ext-nav">
+      <Navbar expand="lg" className="navbar-dark bg-primary">
         <Navbar.Brand href="/">{t("app-title")}</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">

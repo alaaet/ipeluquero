@@ -3424,38 +3424,38 @@ input[type=button].btn-block, input[type=reset].btn-block, input[type=submit].bt
 .navbar-light .navbar-text a:focus, .navbar-light .navbar-text a:hover {
   color: rgba(0, 0, 0, 0.9); }
 
-.navbar-dark .navbar-brand, .ext-nav .navbar-brand {
+.navbar-dark .navbar-brand {
   color: #fff; }
 
-.navbar-dark .navbar-brand:focus, .ext-nav .navbar-brand:focus, .navbar-dark .navbar-brand:hover, .ext-nav .navbar-brand:hover {
+.navbar-dark .navbar-brand:focus, .navbar-dark .navbar-brand:hover {
   color: #fff; }
 
-.navbar-dark .navbar-nav .nav-link, .ext-nav .navbar-nav .nav-link {
+.navbar-dark .navbar-nav .nav-link {
   color: rgba(255, 255, 255, 0.5); }
 
-.navbar-dark .navbar-nav .nav-link:focus, .ext-nav .navbar-nav .nav-link:focus, .navbar-dark .navbar-nav .nav-link:hover, .ext-nav .navbar-nav .nav-link:hover {
+.navbar-dark .navbar-nav .nav-link:focus, .navbar-dark .navbar-nav .nav-link:hover {
   color: rgba(255, 255, 255, 0.75); }
 
-.navbar-dark .navbar-nav .nav-link.disabled, .ext-nav .navbar-nav .nav-link.disabled {
+.navbar-dark .navbar-nav .nav-link.disabled {
   color: rgba(255, 255, 255, 0.25); }
 
-.navbar-dark .navbar-nav .active > .nav-link, .ext-nav .navbar-nav .active > .nav-link, .navbar-dark .navbar-nav .nav-link.active, .ext-nav .navbar-nav .nav-link.active, .navbar-dark .navbar-nav .nav-link.show, .ext-nav .navbar-nav .nav-link.show, .navbar-dark .navbar-nav .show > .nav-link, .ext-nav .navbar-nav .show > .nav-link {
+.navbar-dark .navbar-nav .active > .nav-link, .navbar-dark .navbar-nav .nav-link.active, .navbar-dark .navbar-nav .nav-link.show, .navbar-dark .navbar-nav .show > .nav-link {
   color: #fff; }
 
-.navbar-dark .navbar-toggler, .ext-nav .navbar-toggler {
+.navbar-dark .navbar-toggler {
   color: rgba(255, 255, 255, 0.5);
   border-color: rgba(255, 255, 255, 0.1); }
 
-.navbar-dark .navbar-toggler-icon, .ext-nav .navbar-toggler-icon {
+.navbar-dark .navbar-toggler-icon {
   background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3e%3cpath stroke='rgba(255, 255, 255, 0.5)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e"); }
 
-.navbar-dark .navbar-text, .ext-nav .navbar-text {
+.navbar-dark .navbar-text {
   color: rgba(255, 255, 255, 0.5); }
 
-.navbar-dark .navbar-text a, .ext-nav .navbar-text a {
+.navbar-dark .navbar-text a {
   color: #fff; }
 
-.navbar-dark .navbar-text a:focus, .ext-nav .navbar-text a:focus, .navbar-dark .navbar-text a:hover, .ext-nav .navbar-text a:hover {
+.navbar-dark .navbar-text a:focus, .navbar-dark .navbar-text a:hover {
   color: #fff; }
 
 .card {
@@ -4912,10 +4912,10 @@ a.close.disabled {
 .align-text-top {
   vertical-align: text-top !important; }
 
-.bg-primary, .ext-nav {
+.bg-primary {
   background-color: #007bff !important; }
 
-a.bg-primary:focus, a.ext-nav:focus, a.bg-primary:hover, a.ext-nav:hover, button.bg-primary:focus, button.ext-nav:focus, button.bg-primary:hover, button.ext-nav:hover {
+a.bg-primary:focus, a.bg-primary:hover, button.bg-primary:focus, button.bg-primary:hover {
   background-color: #0062cc !important; }
 
 .bg-secondary {
@@ -6202,13 +6202,13 @@ a.bg-dark:focus, a.bg-dark:hover, button.bg-dark:focus, button.bg-dark:hover {
 .mt-auto, .my-auto {
   margin-top: auto !important; }
 
-.mr-auto, .end, .mx-auto {
+.mr-auto, .mx-auto {
   margin-left: auto !important; }
 
 .mb-auto, .my-auto {
   margin-bottom: auto !important; }
 
-.ml-auto, .start, .mx-auto {
+.ml-auto, .mx-auto {
   margin-right: auto !important; }
 
 @media (min-width: 576px) {
@@ -8032,6 +8032,3 @@ a.text-dark:focus, a.text-dark:hover {
 html {
   direction: rtl;
   font-family: "Droid Arabic Kufi", "Droid Sans", sans-serif; }
-
-.align-start {
-  float: right; }

@@ -1,23 +1,8 @@
 @import "../css/bootstrap-min-rtl";
 @import "../css/bootstrap-social";
+
+
 html {direction:rtl;
   font-family:"Droid Arabic Kufi", "Droid Sans", sans-serif;
   
   }
-
-.ext-nav {
-  @extend .navbar-dark ;
-  @extend .bg-primary;
-  }
-
-.start{
-  @extend .ml-auto;
-  }
-
-  .end{
-    @extend .mr-auto;
-    }
-
-.align-start {
-  float: right;
-}

@@ -1,15 +1,2 @@
 @import "../css/bootstrap-min";
 @import "../css/bootstrap-social";
-
-  .ext-nav {
-    @extend .navbar-dark ;
-    @extend .bg-primary;
-}
-
-.start{
-    @extend .mr-auto;
-    }
-  
-    .end{
-      @extend .ml-auto;
-      }
