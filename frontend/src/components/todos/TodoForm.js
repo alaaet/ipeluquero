@@ -32,11 +32,11 @@ class TodoForm extends Component {
       this.props.initialValues ? t("todo.edit") : t("todo.add")
     }`;
     return (
-      <Form onSubmit={this.props.handleSubmit(this.onSubmit)}>
+      <Form onSubmit={this.props.handleSubmit(this.onSubmit)} >
         <Field
           name="task"
           component={this.renderField}
-          label={t("todo.task")}
+          label={t("todo.task")}     
         />
         <Button variant="primary" type="submit">
           {btnText}

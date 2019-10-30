@@ -30,7 +30,7 @@
     "task": "المهمة",
     "add": "أضف",
     "edit": "عدِّل",
-    "edit-frm-title": "Edit Todo",
+    "edit-frm-title": "تعديل المهمة",
     "del-frm-title": "حذف المهمة",
     "del-frm-confirm": "؟هل تريد حذف هذه المهمة",
     "del-frm-confirm-with-task": "هل تريد حذف المهمة:  ",

@@ -9,8 +9,11 @@ import { withTranslation } from "react-i18next";
 
 class Header extends Component {
   changeLocale = lang => {
+    const prevLang = this.props.lang
     this.props.i18n.changeLanguage(lang);
     this.props.change_language(lang);
+    if (lang =='ar' || prevLang == 'ar')
+    window.location.reload(false);
   };
 
   render() {
@@ -68,7 +71,7 @@ class Header extends Component {
     const handleSelect = () => {};
 
     return (
-      <Navbar expand="lg" className="navbar-dark bg-primary">
+      <Navbar expand="lg" className="ext-nav">
         <Navbar.Brand href="/">{t("app-title")}</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">

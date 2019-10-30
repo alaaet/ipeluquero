@@ -5,6 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "scss-rtl": "node-sass --watch ./frontend/static/frontend/scss/rtl.scss ./frontend/static/frontend/css/rtl.css",
+    "scss-ltr": "node-sass --watch ./frontend/static/frontend/scss/ltr.scss ./frontend/static/frontend/css/ltr.css",
     "dev": "webpack --mode development --watch ./frontend/src/index.js --output ./frontend/static/frontend/js/main.js",
     "build": "webpack --mode production ./frontend/src/index.js --output ./frontend/static/frontend/js/main.js"
   },
@@ -26,6 +28,7 @@
     "@babel/preset-react": "^7.6.3",
     "babel-loader": "^8.0.6",
     "babel-plugin-transform-class-properties": "^6.24.1",
+    "node-sass": "^4.13.0",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.9"
   },

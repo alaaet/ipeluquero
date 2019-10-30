@@ -14,11 +14,14 @@ import TodoDelete from "./todos/TodoDelete";
 import TodoEdit from "./todos/TodoEdit";
 import i18n from "../i18n";
 import { I18nextProvider } from "react-i18next";
-import "../../static/frontend/css/App.css";
 
 class App extends Component {
   componentDidMount() {
     store.dispatch(loadUser());
+    const state = store.getState();
+    const lang = state.auth.lang ? state.auth.lang : "en";
+    if(lang=="ar")require( "../../static/frontend/css/rtl.css");
+    else require( "../../static/frontend/css/ltr.css");
   }
 
   render() {
