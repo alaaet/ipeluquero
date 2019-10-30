@@ -4,8 +4,10 @@ import { logout, change_language } from "../../actions/auth";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
+import Image from "react-bootstrap/Image";
 // Internationalization
 import { withTranslation } from "react-i18next";
+
 
 class Header extends Component {
   changeLocale = (e,lang) => {
@@ -19,21 +21,25 @@ class Header extends Component {
   render() {
     const { user, isAuthenticated } = this.props.auth;
     const { t } = this.props;
+
+    const dropDown = (        
+    <NavDropdown title={t("dashboard.language")} id="basic-nav-dropdown" >
+    <NavDropdown.Item  onClick={(e) => this.changeLocale(e,"en")}>
+    <Image style={{width: 30, height: 30}} src="../../../static/frontend/img/en-flag.png" />&nbsp;&nbsp; En
+    </NavDropdown.Item>
+    <NavDropdown.Divider />
+    <NavDropdown.Item  onClick={(e) => this.changeLocale(e,"es")}>
+    <Image style={{width: 30, height: 30}} src="../../../static/frontend/img/es-flag.png" />&nbsp;&nbsp; Es
+    </NavDropdown.Item>
+    <NavDropdown.Divider />
+    <NavDropdown.Item  onClick={(e) => this.changeLocale(e,"ar")}>
+    <Image style={{width: 30, height: 30}} src="../../../static/frontend/img/ar-flag.png" />&nbsp;&nbsp; Ar
+    </NavDropdown.Item>
+  </NavDropdown>);
+
     const userLinks = (
       <Nav className="ml-auto">
-        <NavDropdown title={t("dashboard.language")} id="basic-nav-dropdown">
-          <NavDropdown.Item  onClick={(e) => this.changeLocale(e,"en")}>
-            En
-          </NavDropdown.Item>
-          <NavDropdown.Divider />
-          <NavDropdown.Item  onClick={(e) => this.changeLocale(e,"es")}>
-            Es
-          </NavDropdown.Item>
-          <NavDropdown.Divider />
-          <NavDropdown.Item  onClick={(e) => this.changeLocale(e,"ar")}>
-            Ar
-          </NavDropdown.Item>
-        </NavDropdown>
+          {dropDown}
         <Nav.Item>
           <Nav.Link eventKey="disabled" disabled>
             {t("dashboard.welcome")} {user ? user.username : ""} ...
@@ -49,17 +55,7 @@ class Header extends Component {
 
     const guestLinks = (
       <Nav className="ml-auto">
-        <NavDropdown title={t("dashboard.language")} id="basic-nav-dropdown">
-          <NavDropdown.Item href="#" onClick={() => this.changeLocale("en")}>
-            En
-          </NavDropdown.Item>
-          <NavDropdown.Item href="#" onClick={() => this.changeLocale("es")}>
-            Es
-          </NavDropdown.Item>
-          <NavDropdown.Item href="#" onClick={() => this.changeLocale("ar")}>
-            Ar
-          </NavDropdown.Item>
-        </NavDropdown>
+        {dropDown}
         <Nav.Item>
           <Nav.Link href="/register">{t("dashboard.sign-up")}</Nav.Link>
         </Nav.Item>
