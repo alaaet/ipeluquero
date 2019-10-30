@@ -8,7 +8,12 @@
     "scss-rtl": "node-sass --watch ./frontend/static/frontend/scss/rtl.scss ./frontend/static/frontend/css/rtl.css",
     "scss-ltr": "node-sass --watch ./frontend/static/frontend/scss/ltr.scss ./frontend/static/frontend/css/ltr.css",
     "dev": "webpack --mode development --watch ./frontend/src/index.js --output ./frontend/static/frontend/js/main.js",
-    "build": "webpack --mode production ./frontend/src/index.js --output ./frontend/static/frontend/js/main.js"
+    "build": "webpack --mode production ./frontend/src/index.js --output ./frontend/static/frontend/js/main.js",
+    "postinstall": "npm run build"
+  },
+  "engines": {
+    "node": "10.16.3",
+    "npm": "6.12.1"
   },
   "repository": {
     "type": "git",
@@ -39,7 +44,9 @@
     "i18next": "^18.0.1",
     "i18next-browser-languagedetector": "^4.0.0",
     "i18next-xhr-backend": "^3.2.0",
+    "jquery": "^3.4.1",
     "lodash": "^4.17.15",
+    "npm": "^6.12.1",
     "react": "^16.10.2",
     "react-bootstrap": "^1.0.0-beta.14",
     "react-dom": "^16.10.2",
