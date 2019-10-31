@@ -11,8 +11,10 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+
 import django_heroku
 import environ
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -26,15 +28,14 @@ SECRET_KEY = '!u86m#&x83=vgd9b=*)%-ibsji^!7_y@lxpsxcmv4ui4opw*cl'
 env = environ.Env(
     # set casting, default value
     DEBUG=(bool, False),
-    ALLOWED_HOSTS=(list, [])
 )
 # reading .env file
 environ.Env.read_env()
 
 # False if not in os.environ
 DEBUG = env('DEBUG')
-
-ALLOWED_HOSTS = env('ALLOWED_HOSTS')
+DEBUG_PROPAGATE_EXCEPTIONS = True
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'i-peluquero.herokuapp.com']
 
 
 # Application definition
@@ -148,6 +149,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
-# HEROKU CONFIGS
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+#STATICFILES_DIRS=(os.path.join(BASE_DIR, 'frontend/static/frontend'),)
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
 django_heroku.settings(locals())

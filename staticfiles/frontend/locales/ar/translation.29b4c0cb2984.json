@@ -1,0 +1,43 @@
+{
+  "app-title": "لوحة المهام",
+  "dashboard": {
+    "welcome": "مرحباً",
+    "home": "البداية",
+    "language": "اللغة",
+    "logout": "خروج",
+    "sign-up": "حساب جديد",
+    "login": "تسجيل دخول"
+  },
+  "login-frm": {
+    "email": "الايميل",
+    "password": "كلمة السر",
+    "login": "تسجيل الدخول",
+    "no-account-msg": "ليس لديك حساب؟",
+    "register": "حساب جديد",
+    "fb-login": "تسجيل الدخول عن طريق فيسبوك",
+    "ggl-login": "تسجيل الدخول عن طريق قوقل"
+  },
+  "register-frm": {
+    "username": "اسم المستخدم",
+    "email": "الايميل",
+    "password": "كلمة السر",
+    "cnfrm-password": "كرر كلمة السر",
+    "register": "حساب جديد",
+    "have-account-msg": "هل لديك حساب؟",
+    "login": "تسجيل دخول"
+  },
+  "todo": {
+    "task": "المهمة",
+    "add": "أضف",
+    "edit": "عدِّل",
+    "edit-frm-title": "تعديل المهمة",
+    "del-frm-title": "حذف المهمة",
+    "del-frm-confirm": "؟هل تريد حذف هذه المهمة",
+    "del-frm-confirm-with-task": "هل تريد حذف المهمة:  ",
+    "delete": "حذف",
+    "cancel": "إلغاء"
+  },
+  "error": {
+    "1char@least": "ادخِل حرف واحد على الأقل"
+  }
+}

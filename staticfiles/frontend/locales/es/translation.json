@@ -1,0 +1,43 @@
+{
+  "app-title": "Tablero de tareas",
+  "dashboard": {
+    "welcome": "Bienvenido",
+    "home": "Inicio",
+    "language": "Idioma",
+    "logout": "Salir",
+    "sign-up": "Crear cuenta",
+    "login": "Entrar"
+  },
+  "login-frm": {
+    "email": "Correo electronico",
+    "password": "Contraseña",
+    "login": "Entrar",
+    "no-account-msg": "No tiene una cuenta?",
+    "register": "Crear cuenta",
+    "fb-login": "Entrar con facebook",
+    "ggl-login": "Entrar con Google"
+  },
+  "register-frm": {
+    "username": "Usuario",
+    "email": "Correo electronico",
+    "password": "Contraseña",
+    "cnfrm-password": "Confirmar Contraseña",
+    "register": "Crear cuenta",
+    "have-account-msg": "Ya tiene una cuenta?",
+    "login": "Entrar"
+  },
+  "todo": {
+    "task": "Tarea",
+    "add": "Añadir",
+    "edit": "Editar",
+    "edit-frm-title": "Editar Tarea",
+    "del-frm-title": "Eliminar Tarea",
+    "del-frm-confirm": "Está seguro que quiere eliminar esta tarea?",
+    "del-frm-confirm-with-task": "Está seguro que quiere eliminar la tarea: ",
+    "delete": "Eliminar",
+    "cancel": "Cancelar"
+  },
+  "error": {
+    "1char@least": "Por favor, intruduzca una letra al menos"
+  }
+}
