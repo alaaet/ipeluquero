@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 import django_heroku
+import environ
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -22,32 +23,40 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '!u86m#&x83=vgd9b=*)%-ibsji^!7_y@lxpsxcmv4ui4opw*cl'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+env = environ.Env(
+    # set casting, default value
+    DEBUG=(bool, False),
+    ALLOWED_HOSTS=(list, [])
+)
+# reading .env file
+environ.Env.read_env()
 
-ALLOWED_HOSTS = []
+# False if not in os.environ
+DEBUG = env('DEBUG')
+
+ALLOWED_HOSTS = env('ALLOWED_HOSTS')
 
 
 # Application definition
 
 INSTALLED_APPS = [
-    #added
+    # added
     'rest_framework',
     'knox',
-    #default
+    # default
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    #custom
-    'frontend.apps.FrontendConfig', 
+    # custom
+    'frontend.apps.FrontendConfig',
     'todos.apps.TodosConfig',
     'account.apps.AccountConfig'
 ]
 
-REST_FRAMEWORK = {  
+REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'knox.auth.TokenAuthentication',
     ),
