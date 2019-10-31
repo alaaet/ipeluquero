@@ -66,7 +66,7 @@ class LoginForm extends Component {
   };
 
   responseGoogle = response => {
-    console.log(response);
+    //console.log(response);
     this.props.social_login({
       username: response.w3.ig,
       email: response.w3.U3,

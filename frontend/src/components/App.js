@@ -20,8 +20,8 @@ class App extends Component {
     store.dispatch(loadUser());
     const state = store.getState();
     const lang = state.auth.lang ? state.auth.lang : "en";
-    if(lang=="ar")require( "../../static/frontend/css/rtl.css");
-    else require( "../../static/frontend/css/ltr.css");
+    if (lang == "ar") require("../../static/frontend/css/rtl.css");
+    else require("../../static/frontend/css/ltr.css");
   }
 
   render() {
