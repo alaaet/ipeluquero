@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
-
 import django_heroku
 import environ
 
@@ -35,7 +34,8 @@ environ.Env.read_env()
 # False if not in os.environ
 DEBUG = env('DEBUG')
 DEBUG_PROPAGATE_EXCEPTIONS = True
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'i-peluquero.herokuapp.com']
+ALLOWED_HOSTS = ['localhost', '0.0.0.0',
+                 '127.0.0.1', 'i-peluquero.herokuapp.com']
 
 
 # Application definition

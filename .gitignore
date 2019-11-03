@@ -148,4 +148,4 @@ sketch
 # End of https://www.gitignore.io/api/react,django,visualstudiocode
 .vscode/settings.json
 frontend/static/frontend/js/main.js
-.vscode/settings.json
+
