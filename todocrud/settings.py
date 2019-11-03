@@ -151,6 +151,7 @@ USE_TZ = True
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+#print("STATIC_ROOT: ", STATIC_ROOT)
 #STATICFILES_DIRS=(os.path.join(BASE_DIR, 'frontend/static/frontend'),)
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+STATICFILES_STORAGE = 'todocrud.storage_configs.WhiteNoiseStaticFilesStorage'
 django_heroku.settings(locals())
