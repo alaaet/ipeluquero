@@ -91,6 +91,18 @@ class SocialAccount(models.Model):
     def __str__(self):
         return self.user_id
 
+######### HOLIDAYS & VACATIONS RELATED MODELS #########
+class Holiday(models.Model):
+    name = models.CharField(max_length=30)
+    date_from = models.DateField(auto_now_add = True)
+    date_to = models.DateField(auto_now_add = True)
+    is_confirmed = models.BooleanField(default=False)
+
+    class Meta:
+        verbose_name = 'Holiday'
+
+    def __str__(self):
+        return self.name
 
 ######### ADDRESS RELATED MODELS #########
 class Country(models.Model):
@@ -98,7 +110,8 @@ class Country(models.Model):
     abbreviation = models.CharField(max_length=10)
     call_code = models.CharField(max_length=50)
     flag_url = models.CharField(max_length=60)
-
+    holidays = models.ManyToManyField(Holiday)
+    
     class Meta:
         verbose_name = 'Country'
 
@@ -110,6 +123,7 @@ class Region(models.Model):
     country = models.ForeignKey(Country, on_delete=models.CASCADE)
     name = models.CharField(max_length=30)
     abbreviation = models.CharField(max_length=10)
+    holidays = models.ManyToManyField(Holiday)
 
     class Meta:
         verbose_name = 'Region'
@@ -120,8 +134,9 @@ class Region(models.Model):
 
 class City(models.Model):
     country = models.ForeignKey(Country, on_delete=models.CASCADE)
-    region = models.ForeignKey(Region, on_delete=models.SET_NULL)
+    region = models.ForeignKey(Region, on_delete=models.CASCADE)
     name = models.CharField(max_length=30)
+    holidays = models.ManyToManyField(Holiday)
 
     class Meta:
         verbose_name = 'City'
@@ -142,6 +157,18 @@ class Address(models.Model):
 
     class Meta:
         verbose_name = 'Address'
+
+    def __str__(self):
+        return self.name
+
+
+
+
+class NationalHoliday(models.Model):
+    country = models.ForeignKey(Country, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = 'Holiday'
 
     def __str__(self):
         return self.name
