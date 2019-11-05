@@ -92,11 +92,14 @@ class SocialAccount(models.Model):
         return self.user_id
 
 ######### HOLIDAYS & VACATIONS RELATED MODELS #########
+
+
 class Holiday(models.Model):
     name = models.CharField(max_length=30)
-    date_from = models.DateField(auto_now_add = True)
-    date_to = models.DateField(auto_now_add = True)
+    date_from = models.DateField(auto_now_add=True)
+    date_to = models.DateField(auto_now_add=True)
     is_confirmed = models.BooleanField(default=False)
+    is_international = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = 'Holiday'
@@ -105,13 +108,15 @@ class Holiday(models.Model):
         return self.name
 
 ######### ADDRESS RELATED MODELS #########
+
+
 class Country(models.Model):
     name = models.CharField(max_length=30)
     abbreviation = models.CharField(max_length=10)
     call_code = models.CharField(max_length=50)
     flag_url = models.CharField(max_length=60)
     holidays = models.ManyToManyField(Holiday)
-    
+
     class Meta:
         verbose_name = 'Country'
 
@@ -162,13 +167,56 @@ class Address(models.Model):
         return self.name
 
 
+######### BUSINESS & WORKING HOURS RELATED MODELS #########
 
 
-class NationalHoliday(models.Model):
-    country = models.ForeignKey(Country, on_delete=models.CASCADE)
+class Business(models.Model):
+    name = models.CharField(max_length=30)
+    address = models.ForeignKey(Address, on_delete=models.SET_NULL)
+    admin = models.ForeignKey(Account, on_delete=models.SET_NULL)
 
     class Meta:
-        verbose_name = 'Holiday'
+        verbose_name = 'Business'
 
     def __str__(self):
         return self.name
+######### PROVIDERS RELATED MODELS #########
+
+
+class Provider(models.Model):
+    account = models.ForeignKey(Account, on_delete=models.CASCADE)
+    business = models.ForeignKey(Business, on_delete=models.SET_NULL)
+    is_business_admin = models.BooleanField(default=False)
+    rating_avg = models.IntegerField(null=True)
+
+    def __str__(self):
+        return self.account.name
+
+
+class Vacation(models.Model):
+    motive = models.CharField(max_length=30)
+    date_from = models.DateField(auto_now_add=True)
+    date_to = models.DateField(auto_now_add=True)
+    is_confirmed = models.BooleanField(default=False)
+    employee = models.ForeignKey(Account, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = 'Vacation'
+
+    def __str__(self):
+        return self.motive
+
+
+class WorkingHours(models.Model):
+    employee = models.ForeignKey(Account, on_delete=models.CASCADE)
+    day_order = models.IntegerField(max_length=30, default=1)
+    # working period, ex: morning shift
+    period_order = models.IntegerField(max_length=30, default=1)
+    time_from = models.TimeField(auto_now_add=True)
+    time_to = models.TimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = 'WorkingHours'
+
+    def __str__(self):
+        return self.employee.name
