@@ -96,8 +96,8 @@ class SocialAccount(models.Model):
 
 class Holiday(models.Model):
     name = models.CharField(max_length=30)
-    date_from = models.DateField(auto_now_add=True)
-    date_to = models.DateField(auto_now_add=True)
+    date_from = models.DateField()
+    date_to = models.DateField()
     is_confirmed = models.BooleanField(default=False)
     is_international = models.BooleanField(default=False)
 
@@ -114,8 +114,8 @@ class Country(models.Model):
     name = models.CharField(max_length=30)
     abbreviation = models.CharField(max_length=10)
     call_code = models.CharField(max_length=50)
-    flag_url = models.CharField(max_length=60)
-    holidays = models.ManyToManyField(Holiday)
+    flag_url = models.CharField(max_length=60, null=True, blank=True)
+    holidays = models.ManyToManyField(Holiday, blank=True)
 
     class Meta:
         verbose_name = 'Country'
@@ -127,8 +127,8 @@ class Country(models.Model):
 class Region(models.Model):
     country = models.ForeignKey(Country, on_delete=models.CASCADE)
     name = models.CharField(max_length=30)
-    abbreviation = models.CharField(max_length=10)
-    holidays = models.ManyToManyField(Holiday)
+    abbreviation = models.CharField(max_length=10, null=True)
+    holidays = models.ManyToManyField(Holiday, blank=True)
 
     class Meta:
         verbose_name = 'Region'
@@ -141,7 +141,7 @@ class City(models.Model):
     country = models.ForeignKey(Country, on_delete=models.CASCADE)
     region = models.ForeignKey(Region, on_delete=models.CASCADE)
     name = models.CharField(max_length=30)
-    holidays = models.ManyToManyField(Holiday)
+    holidays = models.ManyToManyField(Holiday, blank=True)
 
     class Meta:
         verbose_name = 'City'
@@ -154,11 +154,11 @@ class Address(models.Model):
     account = models.ForeignKey(Account, on_delete=models.CASCADE)
     name = models.CharField(max_length=30)
     st_line1 = models.CharField(max_length=50)
-    st_line2 = models.CharField(max_length=50)
-    city = models.ForeignKey(City, on_delete=models.SET_NULL)
-    region = models.ForeignKey(Region, on_delete=models.SET_NULL)
+    st_line2 = models.CharField(max_length=50, null=True)
+    city = models.ForeignKey(City, on_delete=models.SET_NULL, null=True)
+    region = models.ForeignKey(Region, on_delete=models.SET_NULL, null=True)
     postal_code = models.CharField(max_length=5, default="28013")
-    country = models.ForeignKey(Country, on_delete=models.SET_NULL)
+    country = models.ForeignKey(Country, on_delete=models.SET_NULL, null=True)
 
     class Meta:
         verbose_name = 'Address'
@@ -172,8 +172,8 @@ class Address(models.Model):
 
 class Business(models.Model):
     name = models.CharField(max_length=30)
-    address = models.ForeignKey(Address, on_delete=models.SET_NULL)
-    admin = models.ForeignKey(Account, on_delete=models.SET_NULL)
+    address = models.ForeignKey(Address, on_delete=models.SET_NULL, null=True)
+    admin = models.ForeignKey(Account, on_delete=models.SET_NULL, null=True)
 
     class Meta:
         verbose_name = 'Business'
@@ -185,7 +185,8 @@ class Business(models.Model):
 
 class Provider(models.Model):
     account = models.ForeignKey(Account, on_delete=models.CASCADE)
-    business = models.ForeignKey(Business, on_delete=models.SET_NULL)
+    business = models.ForeignKey(
+        Business, on_delete=models.SET_NULL, null=True)
     is_business_admin = models.BooleanField(default=False)
     rating_avg = models.IntegerField(null=True)
 
@@ -209,9 +210,9 @@ class Vacation(models.Model):
 
 class WorkingHours(models.Model):
     employee = models.ForeignKey(Account, on_delete=models.CASCADE)
-    day_order = models.IntegerField(max_length=30, default=1)
+    day_order = models.IntegerField(default=1)
     # working period, ex: morning shift
-    period_order = models.IntegerField(max_length=30, default=1)
+    period_order = models.IntegerField(default=1)
     time_from = models.TimeField(auto_now_add=True)
     time_to = models.TimeField(auto_now_add=True)
 
