@@ -1,5 +1,5 @@
-from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.db import models
 
 
 class MyAccountManager(BaseUserManager):
@@ -103,9 +103,10 @@ class Holiday(models.Model):
 
     class Meta:
         verbose_name = 'Holiday'
+        verbose_name_plural = "Holidays"
 
     def __str__(self):
-        return self.name
+        return self.name + "  ("+str(self.date_from)+" to "+str(self.date_to)+")"
 
 ######### ADDRESS RELATED MODELS #########
 
@@ -119,6 +120,7 @@ class Country(models.Model):
 
     class Meta:
         verbose_name = 'Country'
+        verbose_name_plural = "Countries"
 
     def __str__(self):
         return self.name
@@ -145,6 +147,7 @@ class City(models.Model):
 
     class Meta:
         verbose_name = 'City'
+        verbose_name_plural = "Cities"
 
     def __str__(self):
         return self.name
@@ -218,6 +221,7 @@ class WorkingHours(models.Model):
 
     class Meta:
         verbose_name = 'WorkingHours'
+        verbose_name_plural = "WorkingHours"
 
     def __str__(self):
         return self.employee.name
