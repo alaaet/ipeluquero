@@ -1,96 +1,6 @@
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.db import models
 
-
-class MyAccountManager(BaseUserManager):
-    def create_user(self, email, username, password=None, **args):
-        if not email:
-            raise ValueError("Users must have an email address")
-        if not username:
-            raise ValueError("Users must have a username")
-
-        user = self.model(
-            email=self.normalize_email(email),
-            username=username
-        )
-
-        user.set_password(password)
-
-        # check for null value
-        if args:
-            if args['given_name'] is not None:
-                user.given_name = args['given_name']
-
-            if args['family_name'] is not None:
-                user.family_name = args['family_name']
-
-            user.save(using=self._db)
-            if args['is_social_account']:
-                # Create social account
-                social_account = SocialAccount.objects.create(
-                    account=user,
-                    social_name=username,
-                    user_id=args['user_id'],
-                    access_token=args['social_token'],
-                    provider=args['provider'],
-                    image_url=args['image_url']
-                )
-                social_account.save(using=self._db)
-
-        return user
-
-    def create_superuser(self, email, username, password):
-        user = self.create_user(
-            email=self.normalize_email(email),
-            password=password,
-            username=username,
-        )
-        user.is_admin = True
-        user.is_staff = True
-        user.is_superuser = True
-        user.save(using=self._db)
-        return user
-
-
-class Account(AbstractBaseUser):
-    email = models.EmailField(verbose_name="email", max_length=60, unique=True)
-    username = models.CharField(max_length=50, unique=True)
-    given_name = models.CharField(max_length=50, null=True)
-    family_name = models.CharField(max_length=50, null=True)
-    date_joined = models.DateTimeField(
-        verbose_name='date joined', auto_now_add=True)
-    last_login = models.DateTimeField(verbose_name='last login', auto_now=True)
-    is_admin = models.BooleanField(default=False)
-    is_active = models.BooleanField(default=True)
-    is_staff = models.BooleanField(default=False)
-    is_superuser = models.BooleanField(default=False)
-
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username']
-
-    objects = MyAccountManager()
-
-    def __str__(self):
-        return self.email
-
-    def has_perm(self, perm, obj=None):
-        return self.is_admin
-
-    def has_module_perms(self, app_label):
-        return True
-
-
-class SocialAccount(models.Model):
-    account = models.ForeignKey(Account, on_delete=models.CASCADE)
-    social_name = models.CharField(max_length=50, null=True)
-    user_id = models.CharField(max_length=200, null=True)
-    access_token = models.CharField(max_length=800, null=True)
-    provider = models.CharField(max_length=30, null=True)
-    image_url = models.CharField(max_length=300, null=True)
-
-    def __str__(self):
-        return self.user_id
-
 ######### HOLIDAYS & VACATIONS RELATED MODELS #########
 
 
@@ -154,10 +64,9 @@ class City(models.Model):
 
 
 class Address(models.Model):
-    account = models.ForeignKey(Account, on_delete=models.CASCADE)
     name = models.CharField(max_length=30)
     st_line1 = models.CharField(max_length=50)
-    st_line2 = models.CharField(max_length=50, null=True)
+    st_line2 = models.CharField(max_length=50, null=True, blank=True)
     city = models.ForeignKey(City, on_delete=models.SET_NULL, null=True)
     region = models.ForeignKey(Region, on_delete=models.SET_NULL, null=True)
     postal_code = models.CharField(max_length=5, default="28013")
@@ -165,14 +74,107 @@ class Address(models.Model):
 
     class Meta:
         verbose_name = 'Address'
+        verbose_name_plural = "Addresses"
 
     def __str__(self):
         return self.name
 
 
+######### ACCOUNTS & SOCIAL ACCOUNTS HOURS RELATED MODELS #########
+
+
+class MyAccountManager(BaseUserManager):
+    def create_user(self, email, username, password=None, **args):
+        if not email:
+            raise ValueError("Users must have an email address")
+        if not username:
+            raise ValueError("Users must have a username")
+
+        user = self.model(
+            email=self.normalize_email(email),
+            username=username
+        )
+
+        user.set_password(password)
+
+        # check for null value
+        if args:
+            if args['given_name'] is not None:
+                user.given_name = args['given_name']
+
+            if args['family_name'] is not None:
+                user.family_name = args['family_name']
+
+            user.save(using=self._db)
+            if args['is_social_account']:
+                # Create social account
+                social_account = SocialAccount.objects.create(
+                    account=user,
+                    social_name=username,
+                    user_id=args['user_id'],
+                    access_token=args['social_token'],
+                    provider=args['provider'],
+                    image_url=args['image_url']
+                )
+                social_account.save(using=self._db)
+
+        return user
+
+    def create_superuser(self, email, username, password):
+        user = self.create_user(
+            email=self.normalize_email(email),
+            password=password,
+            username=username,
+        )
+        user.is_admin = True
+        user.is_staff = True
+        user.is_superuser = True
+        user.save(using=self._db)
+        return user
+
+
+class Account(AbstractBaseUser):
+    email = models.EmailField(verbose_name="email", max_length=60, unique=True)
+    username = models.CharField(max_length=50, unique=True)
+    given_name = models.CharField(max_length=50, null=True)
+    family_name = models.CharField(max_length=50, null=True)
+    address = models.ForeignKey(Address, on_delete=models.SET_NULL, null=True)
+    date_joined = models.DateTimeField(
+        verbose_name='date joined', auto_now_add=True)
+    last_login = models.DateTimeField(verbose_name='last login', auto_now=True)
+    is_admin = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
+    is_superuser = models.BooleanField(default=False)
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['username']
+
+    objects = MyAccountManager()
+
+    def __str__(self):
+        return self.email
+
+    def has_perm(self, perm, obj=None):
+        return self.is_admin
+
+    def has_module_perms(self, app_label):
+        return True
+
+
+class SocialAccount(models.Model):
+    account = models.ForeignKey(Account, on_delete=models.CASCADE)
+    social_name = models.CharField(max_length=50, null=True)
+    user_id = models.CharField(max_length=200, null=True)
+    access_token = models.CharField(max_length=800, null=True)
+    provider = models.CharField(max_length=30, null=True)
+    image_url = models.CharField(max_length=300, null=True)
+
+    def __str__(self):
+        return self.user_id
+
+
 ######### BUSINESS & WORKING HOURS RELATED MODELS #########
-
-
 class Business(models.Model):
     name = models.CharField(max_length=30)
     address = models.ForeignKey(Address, on_delete=models.SET_NULL, null=True)
@@ -180,21 +182,22 @@ class Business(models.Model):
 
     class Meta:
         verbose_name = 'Business'
+        verbose_name_plural = "Businesses"
 
     def __str__(self):
         return self.name
+
+
 ######### PROVIDERS RELATED MODELS #########
-
-
 class Provider(models.Model):
     account = models.ForeignKey(Account, on_delete=models.CASCADE)
     business = models.ForeignKey(
         Business, on_delete=models.SET_NULL, null=True)
     is_business_admin = models.BooleanField(default=False)
-    rating_avg = models.IntegerField(null=True)
+    rating_avg = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
-        return self.account.name
+        return self.account.username
 
 
 class Vacation(models.Model):
@@ -211,10 +214,11 @@ class Vacation(models.Model):
         return self.motive
 
 
+######### EMPLOYEES WORKING HOURS AND VACATIONS RELATED MODELS #########
 class WorkingHours(models.Model):
     employee = models.ForeignKey(Account, on_delete=models.CASCADE)
     day_order = models.IntegerField(default=1)
-    # working period, ex: morning shift
+    # period_order is the working period, ex: morning shift
     period_order = models.IntegerField(default=1)
     time_from = models.TimeField(auto_now_add=True)
     time_to = models.TimeField(auto_now_add=True)
