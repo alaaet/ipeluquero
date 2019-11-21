@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import Group
+from knox.models import AuthToken
 
 from .models import (Account, Address, Business, City, Country, Holiday,
                      Provider, Region, SocialAccount, Vacation, WorkingHours)
@@ -8,9 +9,10 @@ from .models import (Account, Address, Business, City, Country, Holiday,
 # Registering/Unregistering models
 admin.site.register([Address, Business, Provider, ])
 admin.site.unregister(Group)
+admin.site.unregister(AuthToken)
 
 # Customizing admin dasboard main attributes
-admin.site.site_header = "Dashboard Admin"
+admin.site.site_header = "Administration Dashboard"
 admin.site.site_title = "Dashboard Admin Area"
 admin.site.index_title = "Welcome to the Dashboard admin area"
 

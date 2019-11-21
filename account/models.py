@@ -10,6 +10,7 @@ class Holiday(models.Model):
     date_to = models.DateField()
     is_confirmed = models.BooleanField(default=False)
     is_international = models.BooleanField(default=False)
+    is_annual = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = 'Holiday'
@@ -141,7 +142,7 @@ class Account(AbstractBaseUser):
     address = models.ForeignKey(Address, on_delete=models.SET_NULL, null=True)
     date_joined = models.DateTimeField(
         verbose_name='date joined', auto_now_add=True)
-    last_login = models.DateTimeField(verbose_name='last login', auto_now=True)
+    #last_login = models.DateTimeField(verbose_name='last login', auto_now=True)
     is_admin = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
@@ -201,7 +202,7 @@ class Provider(models.Model):
 
 
 class Vacation(models.Model):
-    motive = models.CharField(max_length=30)
+    motive = models.CharField(max_length=30, blank=True)
     date_from = models.DateField(auto_now_add=True)
     date_to = models.DateField(auto_now_add=True)
     is_confirmed = models.BooleanField(default=False)
