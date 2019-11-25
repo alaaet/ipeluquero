@@ -7,7 +7,7 @@ from .models import (Account, Address, Business, City, Country, Holiday,
                      Provider, Region, SocialAccount, Vacation, WorkingHours)
 
 # Registering/Unregistering models
-admin.site.register([Address, Business, Provider, ])
+admin.site.register([Address, Business, Holiday, ])
 admin.site.unregister(Group)
 admin.site.unregister(AuthToken)
 
@@ -35,17 +35,21 @@ class AccountAdmin(UserAdmin):
     fieldsets = ()
 
 # SOCIAL ACCOUNT MODEL #### (HIDDEN)
+
+
 @admin.register(SocialAccount)
 class SocialAccountAdmin(admin.ModelAdmin):
     def get_model_perms(self, request):
         return {}
 
+
 # HOLIDAY MODEL #### (HIDDEN)
+"""
 @admin.register(Holiday)
 class HolidayAdmin(admin.ModelAdmin):
     def get_model_perms(self, request):
         return {}
-
+"""
 # VACATION MODEL #### (HIDDEN)
 @admin.register(Vacation)
 class VacationAdmin(admin.ModelAdmin):
@@ -120,3 +124,23 @@ class CityInline(admin.StackedInline):
 class CityAdmin(admin.ModelAdmin):
     inlines = [CityInline]
     exclude = ('holidays',)
+
+
+#### PROVIDER MODEL ####
+class VacationInline(admin.StackedInline):
+    model = Vacation
+    extra = 0
+    verbose_name = "Vacation"
+    verbose_name_plural = "Vacations"
+
+
+class WorkingHoursInline(admin.StackedInline):
+    model = WorkingHours
+    extra = 0
+    verbose_name = "WorkingHours"
+    verbose_name_plural = "WorkingHours"
+
+
+@admin.register(Provider)
+class ProviderAdmin(admin.ModelAdmin):
+    inlines = [VacationInline, WorkingHoursInline]

@@ -203,10 +203,10 @@ class Provider(models.Model):
 
 class Vacation(models.Model):
     motive = models.CharField(max_length=30, blank=True)
-    date_from = models.DateField(auto_now_add=True)
-    date_to = models.DateField(auto_now_add=True)
+    date_from = models.DateField(null=False, blank=False)
+    date_to = models.DateField(null=False, blank=False)
     is_confirmed = models.BooleanField(default=False)
-    employee = models.ForeignKey(Account, on_delete=models.CASCADE)
+    employee = models.ForeignKey(Provider, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = 'Vacation'
@@ -217,16 +217,16 @@ class Vacation(models.Model):
 
 ######### EMPLOYEES WORKING HOURS AND VACATIONS RELATED MODELS #########
 class WorkingHours(models.Model):
-    employee = models.ForeignKey(Account, on_delete=models.CASCADE)
+    employee = models.ForeignKey(Provider, on_delete=models.CASCADE)
     day_order = models.IntegerField(default=1)
     # period_order is the working period, ex: morning shift
     period_order = models.IntegerField(default=1)
-    time_from = models.TimeField(auto_now_add=True)
-    time_to = models.TimeField(auto_now_add=True)
+    time_from = models.TimeField(null=False, blank=False)
+    time_to = models.TimeField(null=False, blank=False)
 
     class Meta:
         verbose_name = 'WorkingHours'
         verbose_name_plural = "WorkingHours"
 
     def __str__(self):
-        return self.employee.name
+        return self.employee.account.username
